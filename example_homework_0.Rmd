@@ -1,0 +1,29 @@
+---
+title: "Interesting Forecasting Applications with R"
+author: "Name Surname - esra nur tinaz"
+---
+```{r,echo=FALSE,results="hide"}
+library(knitr)
+opts_chunk$set(tidy.opts=list(width.cutoff=60),tidy=TRUE)
+```
+
+```{r,echo=FALSE,eval=FALSE}
+rmarkdown::render("/home/baydogan/Courses/IE360/Guidelines/example_homework_0.Rmd",output_format="pdf_document")
+rmarkdown::render("/home/baydogan/Courses/IE360/Guidelines/example_homework_0.Rmd",output_format="html_document")
+```
+
+1. [Time series forecasting using ARIMA models](https://blogs.oracle.com/datascience/introduction-to-forecasting-with-arima-in-r)
+
+    This example is important because it introduces the forecasting methodology using ARIMA models in R. The steps are ...
+
+2.[An overview of time series forecasting models](https://towardsdatascience.com/an-overview-of-time-series-forecasting-models-a2fa7a358fcb)
+    this article defines main models for time series applications with using R and Phyton.
+   
+3. [What Makes ARIMA & XTS Objects So Useful for Forecasting
+XTS Objects]
+(https://datasciencelessons.com/2019/12/13/introduction-to-forecasting-with-arima-in-r/)
+
+    an article about What Makes ARIMA & XTS Objects So Useful for Forecast
+    
+library(caTools)
+sessionInfo()
