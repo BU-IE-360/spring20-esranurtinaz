@@ -24,6 +24,10 @@ XTS Objects]
 (https://datasciencelessons.com/2019/12/13/introduction-to-forecasting-with-arima-in-r/)
 
     an article about What Makes ARIMA & XTS Objects So Useful for Forecast
+4.[Time Series Analysis]
+(https://www.statisticssolutions.com/time-series-analysis/)
+ 
+    a webpage for time series analysis, trend analysis and ARIMA models
     
 library(caTools)
 sessionInfo()
