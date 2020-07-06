@@ -1,5 +1,5 @@
 ##IE360 Project Report
-you can reach my HTML files from [here]
+you can reach my HTML files from [link]
 (files HW/project-report.html)
 
 **HW0**
