@@ -68,19 +68,19 @@ As mentioned in the previous section, we used different forecast approach techni
 
 MAPE refers to Mean Absolute Percentage Error and is a measure of prediction accuracy of forecasting model. It expresses the accuracy as a percentage ratio defined by the formula ;
 
-![](C:/Users/ASUS/Desktop/boun pdf kitaplar/IE360/mape.png)
+![](C:/Users/ASUS/Desktop/GITHUB/spring20-esranurtinaz/files/mape.png)
 
 where A is the actual value, F is the forecast value and N is the time horizon.
 
 The other measure of prediction accuracy which we used in our project is MSE. MSE refers to Mean Squared Error and measures the average of the squares of the errors which expresses the average squared difference between the predicted values and actual values. It is computed as;
 
-![](C:/Users/ASUS/Desktop/boun pdf kitaplar/IE360/mse.png)
+![](C:/Users/ASUS/Desktop/GITHUB/spring20-esranurtinaz/files/mse.png)
 
 where Y is the actual value and Y- head is the predicted value. 
 
 In our predictions, we commonly preferred to use MAPE performance indicator since it is independent from scale and easy to interpret. However, for some of the products, due to lack of data, we were unable to calculate MAPE. For such products, we have made our decisions for the best model by using MSE. Based on the approach implemented, you can see the results of our prediction models.
 
-![Table1:Daily Submission Scores](C:/Users/ASUS/Desktop/boun pdf kitaplar/IE360/daily submission scores.png)
+![Table1:Daily Submission Scores](C:/Users/ASUS/Desktop/GITHUB/spring20-esranurtinaz/files/daily submission scores.png)
 
 Consequently, the forecast method we used in the model is dependent on the scores. Initially, we started with moving average models but in the later days we started to use regression and ARIMA models since they gave us more accurate predictions. 
 
