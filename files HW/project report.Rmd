@@ -1,0 +1,212 @@
+---
+title: "IE360 Project Report"
+author: Gruop 11- Elif Bayazit,Anil Baran Dogan,Ekin Karamalak,Yusuf Ozdemir,Esranur
+  Tinaz-IE360 - Sping 2020
+---
+```{r,echo=FALSE,results="hide"}
+library(knitr)
+opts_chunk$set(tidy.opts=list(width.cutoff=60),tidy=TRUE)
+```
+
+```{r,echo=FALSE,eval=FALSE}
+rmarkdown::render("/Users/ASUS/Desktop/GITHUB/spring20-esranurtinaz/files HW/project report.Rmd",output_format="pdf_document")
+rmarkdown::render("/home/baydogan/Courses/IE360/Guidelines/example_homework_0.Rmd",output_format="html_document")
+```
+
+# Introduction 
+
+As Internet evolves throughout years, online shopping became one of the most important sectors around world. Everyday, millions of people purchase many different items via online shopping websites. Trendyol is Turkeys most popular online shopping website. In this project, we were expected to forecast the sales of eight different products in Trendyol. 
+
+Historical sales data from the 30April 2019 were given in dataset. Average price of the items sold, number of items sold number of visits to the particular product, number of times the product is added to favorites, number of times the product is added to basket, number of items sold from the same category, number of items sold from the same category brand, visits to the category of the item, total Trendyol visits in the given day were available in dataset.
+
+Before using data for forecasting, the sales data of days having a price value -1 had to be removed. On these days, there were not any sale and these rows in data could cause problems to determine a good model for forecasting. In data of 2019, there were many rows in this format. So, starting date for training data for each product was different. 
+
+Groups competed according to forecasts between 15th May and 12th June. Groups had to submit their sales forecasts before 1:00 pm everyday. These forecasts are the forecasts for the day after submission. Last data which could be used for predictions were sales which occurred one day before the submission. Each day, groups were ranked according to their weighted mean absolute percentage error (WMAPE). Groups having the least WMAPE value become winner of the day and took 26 points. Overall ranking is determined with sorting groups by cumulative sum of daily ranking points. 
+
+Groups were free to choose their own approach to predict the sales. As Group 11, we used linear regression, naive forecast approach with lags of two and seven days, autoregressive integrated moving average (ARIMA) and simple moving average. All approaches are explained in Approach part. Among these methods, method having least mean squared error or mean absolute error, depending on the cases of zero-demand, was used to predict sales of next day. 
+
+
+# Related Literature
+
+Before starting submissions, DataCamp courses assigned to students in the IE360 course were studied:
+
+Forecasting in R, by Rob J.Hyndman: Forecasting methods which can be used in R were included in this course. Plotting the data, training and test data concepts, exponential smoothing, ARIMA models and other advanced methods can be found in this course. 
+
+Forecasting Product Demand in R, by Aric La Barr: This course is very useful in this project because the main purpose of this project is also a demand forecast. Plotting the time series data, evaluating methods, components of demand, regression in time series and hierarchical forecasting are included in this course. 
+
+# Approach
+
+For this project, in order to forecast the demand of the next day for the given products on Trendyol, we have facilitated from four different forecasting methods.
+
+__1. Naive Forecast:__
+
+ Naive Forecasting is a technique that uses that last periods actual values as the forecast for the next period. We built two different models using naive forecast approach with lags of two and seven days. 
+
+__2. Moving Average:__
+
+ Moving average is a forecasting technique that displays the overall trend in a data set by taking the average of observations on a selected set of time period. In this project, we applied moving average method with different time periods. We built six models that take the average of the last observations that range from 2 days to 7 days.
+
+__3. Linear Regression:__
+
+  Linear regression is an approach that helps to predict the future values of a variable based on one or more explanatory variables. The case in which only one explanatory variable is used is named as simple linear regression. However, if more than one explanatory variable is used than it is called multiple linear regression. We used both of them to build models in this project. In order to forecast the number of sales, we considered the data that might be correlated with it and built two different regression models, one of which takes only price as an explanatory variable and the other takes both price and weekday/weekend difference into account. We did not include the rest of the data since they are not highly correlated to sales count.
+
+__4. ARIMA:__
+
+  ARIMA (Auto Regressive Integrated Moving Average) is a class of models that is used to make predictions from a time series data based on the past values, which means it describes the autocorrelations that exist in the data. ARIMA can be used to build a model for a time series that is non-seasonal, exhibits a certain pattern and is not a random white noise. An ARIMA model can be described by 3 terms: p, d, q where p stands for the order of the AR term, q represents the order of the MA term and d is the number of differencing necessary to make the time series stationary.
+  
+Before applying the methods, we have mentioned above, we manipulated the data since the methods were not applicable to raw data. From the data that was provided to us, we eliminated the ones that we considered were unrelated and took only the required information. Also, we have ignored the data that belonged to a date that was before the sale of the specific item began for each item. Finally, we added a column called is_weekend to build the second regression model.
+
+We have applied a simple cross validation by splitting the data into two sets: training set and test set. Cross validation indicates how the model will perform on the unseen data. We decided to take the last 31 days as test data and previous data as the training data.
+
+We mostly preferred to use MAPE to select the best model since it is independent from scale and easy to interpret. However, for some of the products, due to lack of data, we were unable to calculate MAPE. For such products, we have made our decisions for the best model by using MSE.
+
+In the first days of the project we have mostly used moving average models to make predictions since they gave better results when their MAPE or MSE values are considered. However, as project continued, ARIMA and regression models started to make more accurate forecasts, so we began to use them instead of moving average. 
+
+# Results 
+
+As mentioned in the previous section, we used different forecast approach techniques which are naive forecast, moving average, linear regression and ARIMA model. It is possible to see that trend of the data changes over time. Hence, throughout the submission period we observed the performance of the forecast models we used and made changes accordingly. Initially, we mostly constructed our predictions with the moving average models since they have us the smallest MAPE or MSE values. 
+
+MAPE refers to Mean Absolute Percentage Error and is a measure of prediction accuracy of forecasting model. It expresses the accuracy as a percentage ratio defined by the formula ;
+
+![](C:/Users/ASUS/Desktop/boun pdf kitaplar/IE360/mape.png)
+
+where A is the actual value, F is the forecast value and N is the time horizon.
+
+The other measure of prediction accuracy which we used in our project is MSE. MSE refers to Mean Squared Error and measures the average of the squares of the errors which expresses the average squared difference between the predicted values and actual values. It is computed as;
+
+![](C:/Users/ASUS/Desktop/boun pdf kitaplar/IE360/mse.png)
+
+where Y is the actual value and Y- head is the predicted value. 
+
+In our predictions, we commonly preferred to use MAPE performance indicator since it is independent from scale and easy to interpret. However, for some of the products, due to lack of data, we were unable to calculate MAPE. For such products, we have made our decisions for the best model by using MSE. Based on the approach implemented, you can see the results of our prediction models.
+
+![Table1:Daily Submission Scores](C:/Users/ASUS/Desktop/boun pdf kitaplar/IE360/daily submission scores.png)
+
+Consequently, the forecast method we used in the model is dependent on the scores. Initially, we started with moving average models but in the later days we started to use regression and ARIMA models since they gave us more accurate predictions. 
+
+# Conclusion and Future Works
+
+As mentioned above, there are several approaches to create a forecast and we used four methods to understand which method should be used for each product in this project. We tested our approaches using test data set which created from existed time series for each product and choose least MAPE value. 
+
+First days of submission, moving average model was worked well, but in forward days results of our Arima and regression models were better. Because moving average model is responsive to current event and has been affected from daily changes more. 
+
+Regression models are used when there is relation between two (or more) elements in a time series. In project, price and is_weekend variables are used to understand behavior of sold_count. Arima models and regressions were resulted well in later days because models had more historical data to interpret and reduce autocorrelation. 
+
+In next implementations, basket_count (number of specified product in basket),  favorite_count, (number of specified product in customers favorite list), or number of subsidiary products that are sold with primary product can be used to develop different regression models.
+
+# Code for first product
+
+Since the whole code is too long and same procedure is followed for all products, only the part for forecasting product 1 is provided below:
+
+```{r echo=TRUE, eval=FALSE}
+# this part is main code
+subm_url = 'http://167.172.183.67'
+
+u_name = "Group11"
+p_word = "JXTmcp8U2quxX93W"
+submit_now = FALSE
+username = u_name
+password = p_word
+require(xts)
+require(forecast)
+library(timeDate)
+token = get_token(username=u_name, password=p_word, url=subm_url)
+data = get_data(token=token,url=subm_url)
+data[,.N,list(product_content_id)]
+data[,day:=weekdays(event_date)]
+data[,is_weekend:=ifelse(isWeekend(event_date),1,0)]
+data[,logsales:=log(sold_count)]
+data[,logprice:=log(price)]
+product1=data[product_content_id==31515569]
+filtered_product1=product1[as.Date(event_date)>'2020-01-02']
+filtered_product1=filtered_product1[order(event_date)]
+filtered_product1[,event_date:=as.Date(event_date)]
+filtered_product1=filtered_product1[,list(product_content_id,event_date,price,sold_count,is_weekend,day)]
+filtered_product1[,lag2_forecast:=shift(sold_count,2)]
+filtered_product1[,lag7_forecast:=shift(sold_count,7)]
+dates1<- seq(as.Date("2020-01-03"), length = 150, by = "days")
+filtered_product1_xts <- xts(filtered_product1[,"sold_count"], order.by = dates1)
+filtered_product1_xts_train <- filtered_product1_xts[index(filtered_product1_xts) < "2020-05-01"]
+filtered_product1_xts_valid <- filtered_product1_xts[index(filtered_product1_xts) >= "2020-05-01"]
+arima1<-auto.arima(filtered_product1_xts_train)
+forecast_arima1 <- forecast(arima1, h = 31)
+for_dates <- seq(as.Date("2020-05-01"), length = 31, by = "days")
+for_arima1_xts <- xts(forecast_arima1$mean, order.by = for_dates)
+for_arima1 <- as.numeric(forecast_arima1$mean)
+v_product1 <- as.numeric(filtered_product1_xts_valid)
+MSEarima1 <- mean((for_arima1 - v_product1)^2)
+MSEarima1
+ets1<-ets(filtered_product1_xts_train)
+ets1
+arima1
+filtered_product1_xts_2<- xts(filtered_product1,order.by=dates1)
+filtered_product1_xts_2_train <- filtered_product1_xts_2[index(filtered_product1_xts_2) < "2020-05-01"]
+sold_1 <- as.vector(as.numeric(filtered_product1_xts_2_train[,"sold_count"]))
+price_1 <- as.vector(as.numeric(filtered_product1_xts_2_train[,"price"]))
+reg_train_1 <- data.frame(sold_1, price_1)
+colnames(reg_train_1) <- c("sales", "price")
+model_reg1 <- lm(sales ~ price, data = reg_train_1)
+model_reg1
+summary(model_reg1)
+filtered_product1_xts_2_test=filtered_product1[as.Date(event_date)>'2020-04-30']
+reg_sales_1=predict(model_reg1,filtered_product1_xts_2_test)
+for_sold_xtsreg <- xts(reg_sales_1, order.by = for_dates)
+for_sold_reg<- as.numeric(for_sold_xtsreg)
+mseregprice1 <- mean((for_sold_reg - v_product1)^2)
+mseregprice1
+filtered_product1_train=filtered_product1[event_date<'2020-05-01']
+filtered_product1_test=filtered_product1[event_date>'2020-04-30']
+day_reg_model1<-lm(sold_count~price+is_weekend,data=filtered_product1_train)
+reg_sales_day_1 <- predict(day_reg_model1,filtered_product1_test)
+for_sold_xtsreg_day_1<-xts(reg_sales_day_1,order.by=for_dates)
+for_sold_reg_day_1<-as.numeric(for_sold_xtsreg_day_1)
+mseregdayprice1<-mean((for_sold_reg_day_1-v_product1)^2)
+mseregdayprice1
+day_reg_model1
+summary(day_reg_model1)
+filtered_product1[,ma_2:=frollmean(shift(sold_count,2),2,align="right")]
+filtered_product1[,ma_3:=frollmean(shift(sold_count,2),3,align="right")]
+filtered_product1[,ma_4:=frollmean(shift(sold_count,2),4,align="right")]
+filtered_product1[,ma_5:=frollmean(shift(sold_count,2),5,align="right")]
+filtered_product1[,ma_6:=frollmean(shift(sold_count,2),6,align="right")]
+filtered_product1[,ma_7:=frollmean(shift(sold_count,2),7,align="right")]
+test_start=as.Date('2020-05-01')
+test_end=max(filtered_product1$event_date) #last available date
+
+# creating necessary objects to store tests
+nof_test_days=as.numeric(test_end-test_start)+1
+predictions1=vector('list',nof_test_days)
+for(i in 1:nof_test_days){
+  forecast_day=test_start+i-1
+  # filtering the forecast date's predictor values
+  naive_forecast1=filtered_product1[event_date==forecast_day,list(event_date,lag2_forecast,lag7_forecast,ma_2,ma_3,ma_4,ma_5,ma_6,ma_7)]
+  # use available data which is data starting from yesterday (i.e. forecast_day - 2)
+  # predict using learned linear regression model
+  # add it to result data.table as a column
+  #store in the list
+  predictions1[[i]]=naive_forecast1
+}
+pred_datatable1=rbindlist(predictions1)
+pred_datatable1=merge(pred_datatable1,filtered_product1[,list(event_date,sold_count)],by='event_date')
+
+head(pred_datatable1,5)
+ts1<-ts(filtered_product1$sold_count,start=c(2020,01,03),frequency = 365)
+ts.plot(ts1,xlab = "Date", ylab = "Sales",main="Sales of Product 1")
+diff1<- diff(filtered_product1$sold_count)
+plot(diff1)
+summary(diff1)
+acf(filtered_product1$sold_count)
+
+#Box.test(filtered_product1$sold_count,lag=14)
+melted=melt(pred_datatable1,id.vars=c(1,10))
+summary_result1=melted[,list(se=(value-sold_count)^2,
+                             ad=abs(value-sold_count),
+                             ape=abs(value-sold_count)/sold_count,sold_count),by=list(event_date,variable)]
+summary_result1[,list(mse=mean(se),mad=mean(ad),mape=mean(ape),quantile90=quantile(ape,0.9)),by=list(variable)]
+fitarima1 <- arima(filtered_product1_xts, order=c(1,1,1))
+fit1<-predict(fitarima1, n.ahead = 2)$pred
+fit1
+```
+
+
+
